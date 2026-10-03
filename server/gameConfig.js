@@ -5,7 +5,7 @@ export const GAME = {
   // Saját tábla a KÖZÖS Kománovics-adatbázisban (felülírható a SCORES_TABLE env-vel).
   defaultTable: 'darts_scores',
   limits: {
-    // 8 kör × max 180 × max 1,5-ös italszorzó + bónuszok ≈ 2200; bőséges ráhagyással:
+    // 8 kör × max 180 × max 1,7-es italszorzó ≈ 2450 (+ bónuszok); bőséges ráhagyással:
     scoreMax: 5000,
     // "level" itt = lejátszott körök száma (1..8)
     levelMax: 8,

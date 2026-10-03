@@ -41,11 +41,14 @@ Minden fájl új: `package.json`, `.nvmrc`, `.gitignore`, `.env.example`, `rende
 - `npm test`: 13/13 OK.
 - Smoke: OK, 0 konzol-/oldalhiba; valódi egér → találat, érintés → „BIKA! 50”; szimuláció mediánok ~750–900 (tökéletes célzás), max pont/mp ~24 (határ: 90).
 - Balance (emberi célzási hibával): sd 4 px → fröccs/sör/pálinka medián ~705/667/652; sd 12 px → 482/509/562.
-- Élő: lásd az alábbi „Deploy” részt.
+- Élő (2026-10-03 10:10–10:13 CEST): `/healthz` → `{"ok":true,"game":"KOMÁNOVICS Darts","storage":"memory","table":"darts_scores"}`;
+  `GET /api/scores` → üres lista; teszt POST „Teszt” 321 pont → 201, rank 1; hihetetlen pont (4999 / 10 mp) → 400; `level: 9` → 400;
+  smoke az élő URL-en (`SUBMIT=0`) → OK, 0 konzolhiba. A „Teszt” bejegyzést a következő deploy törölte (memóriatároló).
 
 ## Deploy
-- Render service: `komanovics-darts`, ID: `SERVICE_ID_PLACEHOLDER`, free, Frankfurt, https://komanovics-darts.onrender.com
+- Render service: `komanovics-darts`, ID: `srv-db0bftvavr4c73evbsd0`, free, Frankfurt, https://komanovics-darts.onrender.com
 - Env: `NODE_VERSION=20`, `SCORES_TABLE=darts_scores`, `SCORE_RATE_LIMIT_PER_MIN=5` (nincs `DATABASE_URL`).
+- Első deploy: `dep-db0bfuvavr4c73evc020` (commit `9fd6e69`), live 2026-10-03 10:10 CEST. A docs-frissítés után kézi `trigger_deploy`.
 
 ## Important discoveries
 - A Render push-alapú auto-deploy nem működik ezeknél a repóknál (GitHub App hozzáférés hiányzik) → `trigger_deploy`.
