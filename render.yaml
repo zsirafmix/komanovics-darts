@@ -1,0 +1,28 @@
+# Render Blueprint – KOMÁNOVICS Darts
+# Egy Node.js web service (statikus játék + ranglista API). Adatbázist SZÁNDÉKOSAN nem hoz létre:
+# a Kománovics-játékok később EGY közös Postgres adatbázison osztoznak, mindegyik a saját táblájában
+# (ez a játék: darts_scores; a KOMÁNOVICS biciklis játék: komanovics_scores). A DATABASE_URL-t
+# ilyenkor kézzel kell beállítani (sync: false) – amíg nincs beállítva, memóriabeli a ranglista.
+# Séma: https://render.com/schema/render.yaml.json
+# A ténylegesen futó szolgáltatás az MCP-vel, közvetlenül (nem Blueprint-szinkronnal) lett létrehozva.
+
+services:
+  - type: web
+    name: komanovics-darts
+    runtime: node
+    plan: free # ingyenes: 15 perc tétlenség után elalszik, az első kérés ~30-60 mp
+    region: frankfurt
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: SCORE_RATE_LIMIT_PER_MIN
+        value: "5"
+      - key: SCORES_TABLE
+        value: darts_scores
+      - key: DATABASE_URL
+        sync: false # a közös Kománovics-adatbázis belső URL-je; SOHA ne commitold
